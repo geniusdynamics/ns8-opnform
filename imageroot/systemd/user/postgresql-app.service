@@ -6,7 +6,7 @@
 [Unit]
 Description=Podman postgresql-app.service
 BindsTo=opnform.service
-After=opnform.service
+After=opnform.service redis.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n

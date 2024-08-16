@@ -10,8 +10,8 @@
 
 [Unit]
 Description=Podman opnform.service
-Requires=postgresql-app.service opnform-app.service
-Before=postgresql-app.service opnform-app.service
+Requires=redis.service postgresql-app.service opnform-app.service
+Before=redis.service postgresql-app.service opnform-app.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
