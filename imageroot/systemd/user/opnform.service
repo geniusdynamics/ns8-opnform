@@ -10,8 +10,8 @@
 
 [Unit]
 Description=Podman opnform.service
-Requires=redis.service postgresql-app.service opnform-app.service opnform-ui.service
-Before=redis.service postgresql-app.service opnform-app.service opnform-ui.service
+Requires=redis.service postgresql-app.service opnform-app.service opnform-ui.service nginx.service
+Before=redis.service postgresql-app.service opnform-app.service opnform-ui.service nginx.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
@@ -22,7 +22,7 @@ ExecStartPre=/bin/rm -f %t/opnform.pid %t/opnform.pod-id
 ExecStartPre=/usr/bin/podman pod create --infra-conmon-pidfile %t/opnform.pid \
     --pod-id-file %t/opnform.pod-id \
     --name opnform \
-    --publish 127.0.0.1:${TCP_PORT}:3000 \
+    --publish 127.0.0.1:${TCP_PORT}:80 \
     --replace
 ExecStart=/usr/bin/podman pod start --pod-id-file %t/opnform.pod-id
 ExecStop=/usr/bin/podman pod stop --ignore --pod-id-file %t/opnform.pod-id -t 10
