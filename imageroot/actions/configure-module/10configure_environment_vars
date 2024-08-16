@@ -14,20 +14,41 @@ import agent
 data = json.load(sys.stdin)
 
 #This is specific to you module, so you need to change it accordingly.
-# we read a json stdin {"vars1":true, "var2":"foo", "vars3": 3} and we writ it to .config/state/environment
-# Upper case to set environment variable and minor case to read from stdin
+rdb = agent.redis_connect(use_replica=True)
+smtp_settings = agent.get_smarthost_settings(rdb)
 
-# this values must exists in the json stdin
-# agent.set_env("MAIL_SERVER", data["mail_server"])
-# agent.set_env("LDAP_DOMAIN", data["ldap_domain"])
+SMTP_HOST = smtp_settings['host']
+SMTP_PORT = smtp_settings['port']
+SMTP_USERNAME = smtp_settings['username']
+SMTP_PASSWORD = smtp_settings['password']
+SMTP_ENCRYPTION = smtp_settings['encrypt_smtp']
+SMTP_TLSVERIFY = smtp_settings['tls_verify']
 
-# you can add default values for the following variables
-# agent.set_env("MAIL_DOMAIN",data.get("mail_domain",""))
-# agent.set_env("WOWORKERSCOUNT",data.get("workers_count",3))
-# agent.set_env("AUXILIARYACCOUNT",data.get("auxiliary_account",True))
-# agent.set_env("ACTIVESYNC",data.get("activesync",False))
+host = data.get('host')
 
 
-# Make sure everything is saved inside the environment file
-# just before starting systemd unit
+opn_config = {
+    "MAIL_MAILER": "smtp",
+    "MAIL_HOST": SMTP_HOST,
+    "MAIL_PORT": SMTP_PORT,
+    "MAIL_USERNAME": SMTP_USERNAME,
+    "MAIL_PASSWORD": SMTP_PASSWORD,
+    "MAIL_ENCRYPTION": SMTP_ENCRYPTION,
+    "MAIL_FROM_ADDRESS": SMTP_USERNAME,
+    "MAIL_FROM_NAME": SMTP_USERNAME,
+    "FRONT_URL": f"https://{host}",
+}
+agent.write_envfile("opnform-api.env", opn_config)
+
+# NUXT_PUBLIC_APP_URL: ${NUXT_PUBLIC_APP_URL:-/}
+#       NUXT_PUBLIC_API_BASE: ${NUXT_PUBLIC_API_BASE:-/api}
+#       NUXT_PRIVATE_API_BASE: http://ingress/api
+
+opn_ui_config = {
+    "NUXT_PUBLIC_APP_URL": f"https://{host}",
+    "NUXT_PUBLIC_API_BASE": "/api",
+    "NUXT_PRIVATE_API_BASE": f"https://{host}/api",
+}
+agent.write_envfile("opnform-ui.env", opn_ui_config)
+
 #agent.dump_env()
