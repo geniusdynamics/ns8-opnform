@@ -13,18 +13,19 @@ import agent
 # If parsing fails, output everything to stderr
 data = json.load(sys.stdin)
 
-#This is specific to you module, so you need to change it accordingly.
+# This is specific to you module, so you need to change it accordingly.
 rdb = agent.redis_connect(use_replica=True)
 smtp_settings = agent.get_smarthost_settings(rdb)
 
-SMTP_HOST = smtp_settings['host']
-SMTP_PORT = smtp_settings['port']
-SMTP_USERNAME = smtp_settings['username']
-SMTP_PASSWORD = smtp_settings['password']
-SMTP_ENCRYPTION = smtp_settings['encrypt_smtp']
-SMTP_TLSVERIFY = smtp_settings['tls_verify']
+SMTP_HOST = smtp_settings["host"]
+SMTP_PORT = smtp_settings["port"]
+SMTP_USERNAME = smtp_settings["username"]
+SMTP_PASSWORD = smtp_settings["password"]
+SMTP_ENCRYPTION = smtp_settings["encrypt_smtp"]
+SMTP_TLSVERIFY = smtp_settings["tls_verify"]
 
-host = data.get('host')
+host = data.get("host")
+api_host = f"https://api.{host}/api"
 
 
 opn_config = {
@@ -46,9 +47,9 @@ agent.write_envfile("opnform-api.env", opn_config)
 
 opn_ui_config = {
     "NUXT_PUBLIC_APP_URL": f"https://{host}",
-    "NUXT_PUBLIC_API_BASE": "/api",
-    "NUXT_PRIVATE_API_BASE": f"https://{host}/api",
+    "NUXT_PUBLIC_API_BASE": api_host,
+    "NUXT_PRIVATE_API_BASE": api_host,
 }
 agent.write_envfile("opnform-ui.env", opn_ui_config)
 
-#agent.dump_env()
+# agent.dump_env()
