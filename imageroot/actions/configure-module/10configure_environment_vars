@@ -38,6 +38,10 @@ opn_config = {
     "MAIL_FROM_ADDRESS": SMTP_USERNAME,
     "MAIL_FROM_NAME": SMTP_USERNAME,
     "FRONT_URL": f"https://{host}",
+    "SELF_HOSTED": "true",
+    "CACHE_DRIVER": "redis",
+    "QUEUE_CONNECTION": "redis",
+    "SESSION_DRIVER": "redis",
 }
 agent.write_envfile("opnform-api.env", opn_config)
 
