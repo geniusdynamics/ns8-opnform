@@ -1,19 +1,19 @@
 {
   "name": "opnform",
   "description": {
-    "en": "My opnform module"
+    "en": "Create beautiful forms and share them anywhere. It's super fast, you don't need to know how to code"
   },
-  "categories": [],
+  "categories": ["collaboration"],
   "authors": [
     {
-      "name": "Name Surname",
-      "email": "author@yourmail.org"
+      "name": "Genius Dynamics",
+      "email": "support@genius.ke"
     }
   ],
   "docs": {
     "documentation_url": "https://docs.opnform.com/",
-    "bug_url": "https://github.com/NethServer/dev",
-    "code_url": "https://github.com/author/ns8-opnform"
+    "bug_url": "https://github.com/geniusdynamics/dev",
+    "code_url": "https://github.com/geniusdynamics/ns8-opnform"
   },
-  "source": "ghcr.io/nethserver/opnform"
+  "source": "ghcr.io/geniusdynamics/opnform"
 }
