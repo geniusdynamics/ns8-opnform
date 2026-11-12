@@ -22,8 +22,8 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/opnform-app.pid \
     --volume laravel-persist:/persist/:Z \
     --volume opnform-logs:/usr/share/nginx/html/storage/logs/:Z \
     --volume opnform-storage:/usr/share/nginx/html/storage/:Z \
-    --env-file=%S/state/opnform-api.env \
-    --env-file=%S/state/opnform-db.env \
+    --env-file=%E/state/opnform-api.env \
+    --env-file=%E/state/opnform-db.env \
     ${OPNFORM_API_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/opnform-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP opnform-app
