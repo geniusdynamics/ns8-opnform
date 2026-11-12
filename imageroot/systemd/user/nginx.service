@@ -1,0 +1,32 @@
+#
+# Copyright (C) 2022 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+[Unit]
+Description=Podman nginx.service
+BindsTo=opnform.service
+After=opnform.service redis.service postgresql-app.service opnform-app.service opnform-ui.service
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+EnvironmentFile=%S/state/environment
+# EnvironmentFile=%S/state/secrets/passwords.secret
+Restart=always
+TimeoutStopSec=70
+ExecStartPre=/bin/rm -f %t/nginx.pid %t/nginx.ctr-id
+ExecStartPre=/bin/mkdir -p %S/state/restore/
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/nginx.pid \
+    --cidfile %t/nginx.ctr-id --cgroups=no-conmon \
+    --pod-id-file %t/opnform.pod-id --replace -d --name nginx \
+    --volume %S/bin/nginx-template.conf:/etc/nginx/templates/default.conf.template:Z \
+    ${NGINX_IMAGE}
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/nginx.ctr-id -t 10
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/nginx.ctr-id
+ExecReload=/usr/bin/podman kill -s HUP nginx
+SyslogIdentifier=%u
+PIDFile=%t/nginx.pid
+Type=forking
+
+[Install]
+WantedBy=default.target

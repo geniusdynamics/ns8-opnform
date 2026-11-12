@@ -1,9 +1,9 @@
 {
   "name": "opnform",
   "description": {
-    "en": "My opnform module"
+    "en": "Create beautiful forms and share them anywhere. It's super fast, you don't need to know how to code"
   },
-  "categories": [],
+  "categories": ["collaboration"],
   "authors": [
     {
       "name": "Genius Dynamics",
@@ -12,7 +12,7 @@
   ],
   "docs": {
     "documentation_url": "https://docs.opnform.com/",
-    "bug_url": "https://github.com/geniusdynamics/ns8-opnform/issues",
+    "bug_url": "https://github.com/geniusdynamics/dev",
     "code_url": "https://github.com/geniusdynamics/ns8-opnform"
   },
   "source": "ghcr.io/geniusdynamics/opnform"
