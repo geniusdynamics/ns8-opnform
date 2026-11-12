@@ -6,14 +6,14 @@
   "categories": [],
   "authors": [
     {
-      "name": "Name Surname",
-      "email": "author@yourmail.org"
+      "name": "Genius Dynamics",
+      "email": "support@genius.ke"
     }
   ],
   "docs": {
     "documentation_url": "https://docs.opnform.com/",
-    "bug_url": "https://github.com/NethServer/dev",
-    "code_url": "https://github.com/author/ns8-opnform"
+    "bug_url": "https://github.com/geniusdynamics/ns8-opnform/issues",
+    "code_url": "https://github.com/geniusdynamics/ns8-opnform"
   },
-  "source": "ghcr.io/nethserver/opnform"
+  "source": "ghcr.io/geniusdynamics/opnform"
 }
