@@ -3,7 +3,9 @@
   "description": {
     "en": "Create beautiful forms and share them anywhere. It's super fast, you don't need to know how to code"
   },
-  "categories": ["collaboration"],
+  "categories": [
+    "collaboration"
+  ],
   "authors": [
     {
       "name": "Genius Dynamics",
@@ -12,7 +14,7 @@
   ],
   "docs": {
     "documentation_url": "https://docs.opnform.com/",
-    "bug_url": "https://github.com/geniusdynamics/dev",
+    "bug_url": "https://github.com/geniusdynamics/ns8-opnform/issues",
     "code_url": "https://github.com/geniusdynamics/ns8-opnform"
   },
   "source": "ghcr.io/geniusdynamics/opnform"
