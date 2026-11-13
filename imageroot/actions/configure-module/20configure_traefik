@@ -56,18 +56,12 @@ response = agent.tasks.run(
 # Check if traefik configuration has been successfull
 agent.assert_exp(response["exit_code"] == 0)
 
-response = agent.tasks.run(
+# nginx in the pod serves the web client and passes /api and the form
+# assets to the PHP API: one route covers both. Remove the API route of
+# older releases, which shadowed the web client on the same host.
+agent.tasks.run(
     agent_id=agent.resolve_agent_id("traefik@node"),
-    action="set-route",
-    data={
-        "instance": os.environ["MODULE_ID"] + "-api",
-        "url": "http://127.0.0.1:" + api_tcp_port,
-        "host": host,
-        "http2https": h2hs,
-        "lets_encrypt": le,
-    },
+    action="delete-route",
+    data={"instance": os.environ["MODULE_ID"] + "-api"},
 )
-
-# Check if traefik configuration has been successfull
-agent.assert_exp(response["exit_code"] == 0)
 # agent.dump_env()
