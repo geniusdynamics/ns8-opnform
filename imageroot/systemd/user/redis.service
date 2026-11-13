@@ -10,12 +10,13 @@ After=opnform.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
-EnvironmentFile=%S/state/environment
-# EnvironmentFile=%S/state/secrets/passwords.secret
+EnvironmentFile=%E/state/environment
+# EnvironmentFile=%E/state/secrets/passwords.secret
 Restart=always
+RestartSec=10
 TimeoutStopSec=70
 ExecStartPre=/bin/rm -f %t/redis.pid %t/redis.ctr-id
-ExecStartPre=/bin/mkdir -p %S/state/restore/
+ExecStartPre=/bin/mkdir -p %E/state/restore/
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/redis.pid \
     --cidfile %t/redis.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/opnform.pod-id --replace -d --name redis \

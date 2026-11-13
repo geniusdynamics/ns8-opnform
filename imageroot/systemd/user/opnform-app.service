@@ -10,20 +10,21 @@ After=opnform.service redis.service postgresql-app.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
-EnvironmentFile=%S/state/environment
-EnvironmentFile=-%S/state/smarthost.env
-WorkingDirectory=%S/state
+EnvironmentFile=%E/state/environment
+WorkingDirectory=%E/state
 Restart=always
+RestartSec=10
 TimeoutStopSec=70
 ExecStartPre=/bin/mkdir -p config
 ExecStartPre=/bin/rm -f %t/opnform-app.pid %t/opnform-app.ctr-id
-ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/opnform-app.pid \
     --cidfile %t/opnform-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/opnform.pod-id --replace -d --name  opnform-app \
     --volume laravel-persist:/persist/:Z \
     --volume opnform-logs:/usr/share/nginx/html/storage/logs/:Z \
-    --env-file=%S/state/opnform-api.env \
+    --volume opnform-storage:/usr/share/nginx/html/storage/:Z \
+    --env-file=%E/state/opnform-api.env \
+    --env-file=%E/state/opnform-db.env \
     ${OPNFORM_API_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/opnform-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP opnform-app
