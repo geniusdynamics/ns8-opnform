@@ -1,7 +1,8 @@
 {
   "name": "opnform",
   "description": {
-    "en": "Create beautiful forms and share them anywhere. It's super fast, you don't need to know how to code"
+    "en": "Create beautiful forms and share them anywhere. It's super fast, you don't need to know how to code",
+    "it": "OpnForm crea moduli e sondaggi online senza codice, con risposte illimitate."
   },
   "categories": [
     "collaboration"
